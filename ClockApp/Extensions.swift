@@ -1,0 +1,21 @@
+//
+//  Extensions.swift
+//  ClockApp
+//
+
+import Foundation
+
+extension Decimal {
+    func rounded(_ roundingMode: NSDecimalNumber.RoundingMode = .plain) -> Int {
+        var result = Decimal()
+        var number = self
+        NSDecimalRound(&result, &number, 0, roundingMode)
+        return (result as NSDecimalNumber).intValue
+    }
+    var int: Int { rounded(sign == .minus ? .up : .down) }
+    var fraction: Decimal { self - Decimal(int) }
+    
+    var timeString: String {String(format: "%d:%0.2d", self.int / 60, self.int % 60)}
+}
+
+
